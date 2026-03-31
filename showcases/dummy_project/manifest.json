@@ -1,0 +1,15 @@
+{
+  "slug": "dummy_project",
+  "title": "Dummy Project",
+  "description": "Placeholder description for a dummy project.",
+  "techStack": ["Node.js", "Docker API", "Ollama API"],
+  "thumbnail": "/images/showcases/dummy_project/thumb.png",
+  "liveUrl": "https://dummy.zacharystocks.com",
+  "githubUrl": "https://github.com/zstocks/dummy_project",
+  "sections": [
+    { "type": "intro",  "file": "intro.md",  "title": "What & Why",        "emote": { "type": "wave",     "position": "bottom-right" } },
+    { "type": "step",   "file": "step-1.md", "title": "Reading /proc",     "emote": { "type": "curious",  "position": "left" } },
+    { "type": "step",   "file": "step-2.md", "title": "Docker Engine API"  },
+    { "type": "recap",  "file": "recap.md",  "title": "What I Learned",    "emote": { "type": "thumbsup", "position": "bottom-left" } }
+  ]
+}

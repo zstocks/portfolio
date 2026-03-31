@@ -1,0 +1,15 @@
+{
+  "slug": "dashboard",
+  "title": "Server Health Dashboard",
+  "description": "Real-time monitoring built from scratch with Node.js",
+  "techStack": ["Node.js", "Docker API", "WebSockets", "Chart.js"],
+  "thumbnail": "/images/showcases/dashboard/thumb.png",
+  "liveUrl": "https://admin.zacharystocks.com",
+  "githubUrl": "https://github.com/zstocks/dashboard",
+  "sections": [
+    { "type": "intro",  "file": "intro.md",  "title": "What & Why",        "emote": { "type": "wave",     "position": "bottom-right" } },
+    { "type": "step",   "file": "step-1.md", "title": "Reading /proc",     "emote": { "type": "curious",  "position": "left" } },
+    { "type": "step",   "file": "step-2.md", "title": "Docker Engine API"  },
+    { "type": "recap",  "file": "recap.md",  "title": "What I Learned",    "emote": { "type": "thumbsup", "position": "bottom-left" } }
+  ]
+}
