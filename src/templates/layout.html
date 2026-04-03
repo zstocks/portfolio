@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{PAGE_TITLE}}</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav class="site-nav">
+        <a href="/" class="nav-logo">Zachary Stocks</a>
+        <div class="nav-links">
+            <a href="/" class="{{NAV_ACTIVE_HOME}}">Projects</a>
+            <a href="/about" class="{{NAV_ACTIVE_ABOUT}}">About</a>
+            <a href="/contact" class="{{NAV_ACTIVE_CONTACT}}">Contact</a>
+        </div>
+    </nav>
+
+    <main>
+        {{CONTENT}}
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Zachary Stocks</p>
+    </footer>
+
+    {{SCRIPTS}}
+</body>
+</html>

@@ -1,0 +1,25 @@
+<section class="showcase-header">
+    <h1>{{PROJECT_TITLE}}</h1>
+    <p class="showcase-description">{{PROJECT_DESCRIPTION}}</p>
+    <div class="showcase-tech">
+        {{TECH_TAGS}}
+    </div>
+</section>
+
+<div class="showcase-viewer">
+    <div class="showcase-sections" data-total="{{SECTION_COUNT}}">
+        {{SECTIONS}}
+    </div>
+
+    <div class="showcase-nav">
+        <button class="nav-btn" id="prev-btn" disabled>Previous</button>
+        <span class="section-indicator">
+            <span id="current-index">1</span> / {{SECTION_COUNT}}
+        </span>
+        <button class="nav-btn" id="next-btn">Next</button>
+    </div>
+</div>
+
+<div class="showcase-footer">
+    {{PROJECT_LINKS}}
+</div>
