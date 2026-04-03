@@ -7,7 +7,6 @@ const renderer = require('./src/renderer');
 const PORT = 3000;
 const APP_NAME = 'portfolio';
 
-// File extension to MIME type mapping for static files
 const MIME_TYPES = {
     '.html': 'text/html',
     '.css': 'text/css',
@@ -21,10 +20,6 @@ const MIME_TYPES = {
     '.ico': 'image/x-icon'
 };
 
-/**
- * Attempts to serve a static file from public/.
- * Returns true if the file was found and served, false otherwise.
- */
 function serveStaticFile(req, res) {
     const filePath = path.join(__dirname, 'public', req.url);
     const ext = path.extname(filePath);
@@ -32,7 +27,6 @@ function serveStaticFile(req, res) {
 
     if (!mimeType) return false;
 
-    // Prevent path traversal
     const resolved = path.resolve(filePath);
     const publicDir = path.resolve(path.join(__dirname, 'public'));
     if (!resolved.startsWith(publicDir)) return false;
@@ -66,6 +60,22 @@ const server = http.createServer((req, res) => {
     if (pathname === '/') {
         const projects = loader.getAllProjects();
         const html = renderer.renderHome(projects);
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(html);
+        return;
+    }
+
+    // About page
+    if (pathname === '/about') {
+        const html = renderer.renderAbout();
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(html);
+        return;
+    }
+
+    // Contact page
+    if (pathname === '/contact') {
+        const html = renderer.renderContact();
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(html);
         return;

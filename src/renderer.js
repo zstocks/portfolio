@@ -6,6 +6,8 @@ const templatesDir = path.join(__dirname, 'templates');
 const layout = fs.readFileSync(path.join(templatesDir, 'layout.html'), 'utf-8');
 const homeTemplate = fs.readFileSync(path.join(templatesDir, 'home.html'), 'utf-8');
 const showcaseTemplate = fs.readFileSync(path.join(templatesDir, 'showcase.html'), 'utf-8');
+const aboutTemplate = fs.readFileSync(path.join(templatesDir, 'about.html'), 'utf-8');
+const contactTemplate = fs.readFileSync(path.join(templatesDir, 'contact.html'), 'utf-8');
 
 /**
  * Wraps page content in the shared layout shell.
@@ -62,7 +64,6 @@ function renderHome(projects) {
  * Each section is a div that the client-side JS shows/hides.
  */
 function buildSection(section, index) {
-    // Build emote HTML only if the section has one
     let emoteHtml = '';
     if (section.emote) {
         const position = section.emote.position || 'bottom-right';
@@ -89,17 +90,14 @@ function buildSection(section, index) {
  * Renders a full showcase page for a single project.
  */
 function renderShowcase(project) {
-    // Build all sections
     const sectionsHtml = project.sections
         .map((section, index) => buildSection(section, index))
         .join('');
 
-    // Build tech stack tags
     const techTags = project.techStack
         .map(tech => `<span class="tech-tag">${tech}</span>`)
         .join('');
 
-    // Build project links (live demo + GitHub) for the footer
     let linksHtml = '';
     if (project.liveUrl) {
         linksHtml += `<a href="${project.liveUrl}" target="_blank" class="project-link">Live Demo</a>`;
@@ -123,4 +121,24 @@ function renderShowcase(project) {
     });
 }
 
-module.exports = { renderHome, renderShowcase };
+/**
+ * Renders the about page.
+ */
+function renderAbout() {
+    return wrapInLayout(aboutTemplate, {
+        title: 'About',
+        activePage: 'about'
+    });
+}
+
+/**
+ * Renders the contact page.
+ */
+function renderContact() {
+    return wrapInLayout(contactTemplate, {
+        title: 'Contact',
+        activePage: 'contact'
+    });
+}
+
+module.exports = { renderHome, renderShowcase, renderAbout, renderContact };
