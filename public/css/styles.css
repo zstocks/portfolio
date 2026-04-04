@@ -2,7 +2,7 @@
    Portfolio — Maker's Workshop Theme
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* --- Tokens --- */
 :root {
@@ -21,8 +21,8 @@
     --accent-glow:   rgba(224, 146, 42, 0.15);
     --accent-hover:  #f0a83e;
 
-    --font-display:  'Syne', sans-serif;
-    --font-body:     'IBM Plex Sans', sans-serif;
+    --font-display:  'Cormorant Garamond', serif;
+    --font-body:     'Roboto', sans-serif;
     --font-mono:     'IBM Plex Mono', monospace;
 
     --max-width:     1100px;
