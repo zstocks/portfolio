@@ -93,6 +93,7 @@ img {
     font-size: 1.2rem;
     color: var(--text-primary);
     letter-spacing: -0.02em;
+    margin: 0 2rem 0 0;
 }
 
 .nav-logo:hover {
@@ -154,7 +155,7 @@ img {
     font-size: 1.15rem;
     color: var(--text-secondary);
     font-weight: 300;
-    max-width: 600px;
+    max-width: 100%;
 }
 
 /* --- Project Grid --- */
@@ -471,7 +472,7 @@ img {
 /* --- About --- */
 .about {
     padding: 4rem 0;
-    max-width: 650px;
+    max-width: 100%;
 }
 
 .about h1 {
@@ -492,7 +493,7 @@ img {
 /* --- Contact --- */
 .contact {
     padding: 4rem 0;
-    max-width: 650px;
+    max-width: 100%;
 }
 
 .contact h1 {
@@ -512,7 +513,7 @@ img {
 
 .contact-links {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 1rem;
 }
 
@@ -525,6 +526,7 @@ img {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     transition: all var(--transition);
+    width: 50%;
 }
 
 .contact-link:hover {
