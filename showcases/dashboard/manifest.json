@@ -1,15 +1,20 @@
 {
-  "slug": "dashboard",
-  "title": "Server Health Dashboard",
-  "description": "Real-time monitoring built from scratch with Node.js",
-  "techStack": ["Node.js", "Docker API", "WebSockets", "Chart.js"],
-  "thumbnail": "/images/showcases/dashboard/thumb.png",
-  "liveUrl": "https://admin.zacharystocks.com",
-  "githubUrl": "https://github.com/zstocks/dashboard",
-  "sections": [
-    { "type": "intro",  "file": "intro.md",  "title": "What & Why",        "emote": { "type": "wave",     "position": "bottom-right" } },
-    { "type": "step",   "file": "step-1.md", "title": "Reading /proc",     "emote": { "type": "curious",  "position": "left" } },
-    { "type": "step",   "file": "step-2.md", "title": "Docker Engine API"  },
-    { "type": "recap",  "file": "recap.md",  "title": "What I Learned",    "emote": { "type": "thumbsup", "position": "bottom-left" } }
-  ]
+    "slug": "dashboard",
+    "title": "Server Health Dashboard",
+    "description": "A real-time monitoring dashboard built from scratch with custom Node.js — reading directly from the Linux kernel, Docker Engine API, and Nginx internals.",
+    "techStack": ["Node.js", "Docker API", "WebSockets", "Chart.js", "/proc", "Nginx"],
+    "thumbnail": "/images/showcases/dashboard/thumb.png",
+    "liveUrl": "",
+    "githubUrl": "https://github.com/zstocks/dashboard",
+    "sections": [
+        { "type": "intro",     "file": "intro.md",     "title": "What & Why",                  "emote": { "type": "wave",     "position": "bottom-right" } },
+        { "type": "approach",  "file": "approach.md",   "title": "Design Decisions",             "emote": { "type": "thinking", "position": "bottom-left"  } },
+        { "type": "step",      "file": "step-1.md",    "title": "Reading the Linux Kernel",      "emote": { "type": "curious",  "position": "right"        } },
+        { "type": "step",      "file": "step-2.md",    "title": "Talking to the Docker Engine",  "emote": { "type": "lightbulb","position": "bottom-right" } },
+        { "type": "step",      "file": "step-3.md",    "title": "Nginx Metrics & the REST API" },
+        { "type": "step",      "file": "step-4.md",    "title": "Ring Buffer & WebSocket Stream", "emote": { "type": "excited",  "position": "left"         } },
+        { "type": "step",      "file": "step-5.md",    "title": "The Frontend Dashboard",        "emote": { "type": "thumbsup", "position": "bottom-right" } },
+        { "type": "step",      "file": "step-6.md",    "title": "Auth & Alerts",                 "emote": { "type": "confident","position": "bottom-left"  } },
+        { "type": "recap",     "file": "recap.md",     "title": "What I Learned",                "emote": { "type": "thumbsup", "position": "bottom-right" } }
+    ]
 }
