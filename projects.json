@@ -1,0 +1,38 @@
+[
+  {
+    "id": "pinochle",
+    "name": "Pinochle",
+    "blurb": "Real-time multiplayer for our family's house rules.",
+    "tags": ["Node", "WebSockets", "SQLite"],
+    "url": "https://pinochle.murphylanegames.com",
+    "github": "https://github.com/zstocks/pinochle",
+    "access": "public"
+  },
+  {
+    "id": "dashboard",
+    "name": "Server Health Dashboard",
+    "blurb": "Live metrics for the VPS — CPU, memory, containers, Nginx.",
+    "tags": ["Node", "WebSockets", "Chart.js"],
+    "url": "https://admin.zacharystocks.com",
+    "github": "https://github.com/zstocks/dashboard",
+    "access": "private"
+  },
+  {
+    "id": "basecamp",
+    "name": "Basecamp",
+    "blurb": "Habit, workout, meal, and body-metric tracker.",
+    "tags": ["Node", "SQLite"],
+    "url": "https://basecamp.zacharystocks.com",
+    "github": null,
+    "access": "private"
+  },
+  {
+    "id": "ollama-chat",
+    "name": "Ollama Chat",
+    "blurb": "Self-hosted LLM chat with a homelab image-gen pipeline.",
+    "tags": ["Node", "Express", "Ollama"],
+    "url": "https://chat.zacharystocks.com",
+    "github": null,
+    "access": "private"
+  }
+]

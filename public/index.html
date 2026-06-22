@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zachary Stocks — Living System Board</title>
+    <meta name="description" content="A live board of the self-hosted apps I build and run.">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav class="site-nav">
+        <a href="/" class="nav-logo">Zachary Stocks</a>
+        <div class="nav-links">
+            <a href="#board">Board</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>I build and run my own infrastructure.</h1>
+            <p>A live board of the apps I self-host — polled server-side, updating in real time. Green means it's serving right now.</p>
+        </section>
+
+        <section id="board" aria-label="Project status board">
+            <div class="board-status">
+                <span id="last-updated" class="last-updated">connecting…</span>
+            </div>
+            <div id="project-grid" class="project-grid" aria-live="polite"></div>
+        </section>
+
+        <section id="about" class="about">
+            <h2>About</h2>
+            <p>I build small, sharp tools and run them on hardware I control. Each app on this board is something I use — for family, for the homelab, for staying in shape — not a demo. The board itself is one of them: a custom Node HTTP server with no framework and no runtime dependencies, polling the rest of the fleet every 30 seconds.</p>
+            <p>The philosophy is minimal upkeep and honest signal. Adding a project here is a one-line edit; the status takes care of itself.</p>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Contact</h2>
+            <p>Quiet inbox, open to interesting problems.</p>
+            <div class="contact-links">
+                <a class="contact-link" href="mailto:zachary.stocks@outlook.com">
+                    <span class="contact-label">Email</span>
+                    <span class="contact-value">zachary.stocks@outlook.com</span>
+                </a>
+                <a class="contact-link" href="https://github.com/zstocks" target="_blank" rel="noopener">
+                    <span class="contact-label">GitHub</span>
+                    <span class="contact-value">github.com/zstocks</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Zachary Stocks · built with Node, no frameworks</p>
+    </footer>
+
+    <script src="/js/board.js"></script>
+</body>
+</html>

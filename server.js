@@ -1,39 +1,73 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
-const loader = require('./src/loader');
-const renderer = require('./src/renderer');
+import http from 'node:http';
+import { readFileSync, existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join, resolve, extname } from 'node:path';
 
-const PORT = 3000;
+import { validateConfig } from './config.js';
+import * as poller from './poller.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const APP_NAME = 'portfolio';
+const PUBLIC_DIR = resolve(join(__dirname, 'public'));
 
 const MIME_TYPES = {
-    '.html': 'text/html',
-    '.css': 'text/css',
-    '.js': 'application/javascript',
-    '.json': 'application/json',
+    '.html': 'text/html; charset=utf-8',
+    '.css': 'text/css; charset=utf-8',
+    '.js': 'application/javascript; charset=utf-8',
+    '.json': 'application/json; charset=utf-8',
     '.png': 'image/png',
     '.jpg': 'image/jpeg',
     '.jpeg': 'image/jpeg',
     '.gif': 'image/gif',
     '.svg': 'image/svg+xml',
-    '.ico': 'image/x-icon'
+    '.ico': 'image/x-icon',
+    '.webp': 'image/webp',
+    '.woff2': 'font/woff2',
 };
 
-function serveStaticFile(req, res) {
-    const filePath = path.join(__dirname, 'public', req.url);
-    const ext = path.extname(filePath);
-    const mimeType = MIME_TYPES[ext];
+const { config, projects } = validateConfig();
 
+// projects.json never changes at runtime, so index it once for fast merging.
+const projectsById = new Map(projects.map((p) => [p.id, p]));
+
+// Board page is read once at startup; a redeploy restarts the container.
+const boardHtml = readFileSync(join(PUBLIC_DIR, 'index.html'));
+
+// Build the public API payload field-by-field from an explicit allowlist.
+// Internal-only detail (ports, IPs, hostnames, file paths, poll errors) never
+// touches this object — only named public fields go out.
+function buildStatusPayload() {
+    const live = poller.getStatus();
+    const projectList = projects.map((p) => {
+        const s = live[p.id] || { status: 'unknown', lastChecked: null, since: null };
+        return {
+            id: p.id,
+            name: p.name,
+            blurb: p.blurb,
+            tags: p.tags,
+            access: p.access,
+            url: p.url,
+            github: p.github,
+            status: s.status,
+            lastChecked: s.lastChecked,
+            since: s.since,
+        };
+    });
+    return { updatedAt: new Date().toISOString(), projects: projectList };
+}
+
+function serveStaticFile(req, res) {
+    const filePath = join(PUBLIC_DIR, req.url);
+    const ext = extname(filePath);
+    const mimeType = MIME_TYPES[ext];
     if (!mimeType) return false;
 
-    const resolved = path.resolve(filePath);
-    const publicDir = path.resolve(path.join(__dirname, 'public'));
-    if (!resolved.startsWith(publicDir)) return false;
+    // Guard against path traversal outside the public directory.
+    const resolved = resolve(filePath);
+    if (resolved !== PUBLIC_DIR && !resolved.startsWith(PUBLIC_DIR + '/')) return false;
+    if (!existsSync(resolved)) return false;
 
-    if (!fs.existsSync(filePath)) return false;
-
-    const content = fs.readFileSync(filePath);
+    const content = readFileSync(resolved);
     res.writeHead(200, { 'Content-Type': mimeType });
     res.end(content);
     return true;
@@ -41,72 +75,43 @@ function serveStaticFile(req, res) {
 
 const server = http.createServer((req, res) => {
     if (req.method !== 'GET' && req.method !== 'HEAD') {
-        res.writeHead(405, { 'Content-Type': 'text/html' });
-        res.end('<h1>405</h1><p>Method not allowed.</p>');
+        res.writeHead(405, { 'Content-Type': 'text/plain; charset=utf-8' });
+        res.end('Method Not Allowed');
         return;
     }
 
-    const url = new URL(req.url, `http://${req.headers.host}`);
-    const pathname = url.pathname;
+    const { pathname } = new URL(req.url, `http://${req.headers.host}`);
 
-    // Health check
     if (pathname === '/health') {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify({ status: 'ok', app: APP_NAME }));
         return;
     }
 
-    // Home page
+    if (pathname === '/api/status') {
+        res.writeHead(200, {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Cache-Control': 'no-store',
+        });
+        res.end(JSON.stringify(buildStatusPayload()));
+        return;
+    }
+
     if (pathname === '/') {
-        const projects = loader.getAllProjects();
-        const html = renderer.renderHome(projects);
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(html);
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(boardHtml);
         return;
     }
 
-    // About page
-    if (pathname === '/about') {
-        const html = renderer.renderAbout();
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(html);
-        return;
-    }
-
-    // Contact page
-    if (pathname === '/contact') {
-        const html = renderer.renderContact();
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(html);
-        return;
-    }
-
-    // Showcase page
-    if (pathname.startsWith('/showcase/')) {
-        const slug = pathname.split('/')[2];
-        const project = loader.getProjectBySlug(slug);
-
-        if (project) {
-            const html = renderer.renderShowcase(project);
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end(html);
-        } else {
-            res.writeHead(404, { 'Content-Type': 'text/html' });
-            res.end('<h1>404</h1><p>Project not found.</p>');
-        }
-        return;
-    }
-
-    // Static files
     if (serveStaticFile(req, res)) return;
 
-    // Fallback 404
-    res.writeHead(404, { 'Content-Type': 'text/html' });
-    res.end('<h1>404</h1><p>Page not found.</p>');
+    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Not Found');
 });
 
-loader.loadAll();
+poller.init(projects, { timeoutMs: config.pollTimeoutMs, intervalMs: config.pollIntervalMs });
+poller.start();
 
-server.listen(PORT, () => {
-    console.log(`${APP_NAME} listening on port ${PORT}`);
+server.listen(config.port, config.host, () => {
+    console.log(`${APP_NAME} listening on http://${config.host}:${config.port} — polling ${projects.length} projects every ${config.pollIntervalMs / 1000}s`);
 });

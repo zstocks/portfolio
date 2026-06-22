@@ -1,12 +1,13 @@
 {
   "name": "portfolio",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "Living system board — real-time up/down status for a self-hosted app fleet.",
+  "type": "module",
   "main": "server.js",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "start": "node server.js"
-  },
-  "dependencies": {
-    "marked": "^17.0.5"
   }
 }
