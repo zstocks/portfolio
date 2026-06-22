@@ -48,7 +48,12 @@ function validateProject(entry, index) {
 // process rather than starting in a half-broken state (house rule).
 export function validateConfig() {
     const config = {
-        host: process.env.HOST || '127.0.0.1',
+        // Bind to all interfaces inside the container. Docker forwards the
+        // published port via the container's network interface (not loopback),
+        // so binding to 127.0.0.1 here would make the app unreachable -> 502.
+        // Host-side exposure is restricted by the compose mapping
+        // (127.0.0.1:3002:3000), which is where the "localhost only" rule lives.
+        host: process.env.HOST || '0.0.0.0',
         port: positiveIntFromEnv('PORT', 3000),
         pollIntervalMs: positiveIntFromEnv('POLL_INTERVAL_MS', 30_000),
         pollTimeoutMs: positiveIntFromEnv('POLL_TIMEOUT_MS', 5_000),
