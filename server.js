@@ -74,39 +74,60 @@ function serveStaticFile(req, res) {
 }
 
 const server = http.createServer((req, res) => {
-    if (req.method !== 'GET' && req.method !== 'HEAD') {
-        res.writeHead(405, { 'Content-Type': 'text/plain; charset=utf-8' });
-        res.end('Method Not Allowed');
-        return;
+    try {
+        if (req.method !== 'GET' && req.method !== 'HEAD') {
+            res.writeHead(405, { 'Content-Type': 'text/plain; charset=utf-8' });
+            res.end('Method Not Allowed');
+            return;
+        }
+
+        // URL.parse (Node 22) returns null instead of throwing on a malformed
+        // path (e.g. `//`, bad `%` escapes), so a bot probe can't crash us.
+        const url = URL.parse(req.url, `http://${req.headers.host}`);
+        if (!url) {
+            res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
+            res.end('Bad Request');
+            return;
+        }
+        const { pathname } = url;
+
+        if (pathname === '/health') {
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ status: 'ok', app: APP_NAME }));
+            return;
+        }
+
+        if (pathname === '/api/status') {
+            res.writeHead(200, {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Cache-Control': 'no-store',
+            });
+            res.end(JSON.stringify(buildStatusPayload()));
+            return;
+        }
+
+        if (pathname === '/') {
+            res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+            res.end(boardHtml);
+            return;
+        }
+
+        if (serveStaticFile(req, res)) return;
+
+        res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+        res.end('Not Found');
+    } catch (err) {
+        // No single request should take down the process. If the response has
+        // already started streaming we can't write a fresh status line, so
+        // destroy the socket instead.
+        console.error('request handler error:', err);
+        if (!res.headersSent) {
+            res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+            res.end('Internal Server Error');
+        } else {
+            res.destroy();
+        }
     }
-
-    const { pathname } = new URL(req.url, `http://${req.headers.host}`);
-
-    if (pathname === '/health') {
-        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-        res.end(JSON.stringify({ status: 'ok', app: APP_NAME }));
-        return;
-    }
-
-    if (pathname === '/api/status') {
-        res.writeHead(200, {
-            'Content-Type': 'application/json; charset=utf-8',
-            'Cache-Control': 'no-store',
-        });
-        res.end(JSON.stringify(buildStatusPayload()));
-        return;
-    }
-
-    if (pathname === '/') {
-        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-        res.end(boardHtml);
-        return;
-    }
-
-    if (serveStaticFile(req, res)) return;
-
-    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-    res.end('Not Found');
 });
 
 poller.init(projects, { timeoutMs: config.pollTimeoutMs, intervalMs: config.pollIntervalMs });

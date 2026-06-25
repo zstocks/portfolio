@@ -33,6 +33,11 @@ function validateProject(entry, index) {
     if (!/^https?:\/\//.test(entry.url)) {
         fail(`${where}.url must start with http:// or https://`);
     }
+    // Fail fast at boot on a URL the regex accepts but the parser rejects
+    // (e.g. an empty host), so the poller never trips on it later.
+    if (URL.parse(entry.url) === null) {
+        fail(`${where}.url is not a valid URL: "${entry.url}".`);
+    }
     if (!ACCESS_VALUES.has(entry.access)) {
         fail(`${where}.access must be "public" or "private", got "${entry.access}".`);
     }
