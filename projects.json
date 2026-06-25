@@ -2,7 +2,7 @@
   {
     "id": "pinochle",
     "name": "Pinochle",
-    "blurb": "Real-time multiplayer for our family's house rules.",
+    "blurb": "Real-time multiplayer for my family's house rules.",
     "tags": ["Node", "WebSockets", "SQLite"],
     "url": "https://pinochle.murphylanegames.com",
     "github": "https://github.com/zstocks/pinochle",
@@ -11,7 +11,7 @@
   {
     "id": "dashboard",
     "name": "Server Health Dashboard",
-    "blurb": "Live metrics for the VPS — CPU, memory, containers, Nginx.",
+    "blurb": "Live metrics for my VPS so I can monitorCPU, memory, containers, Nginx in real time.",
     "tags": ["Node", "WebSockets", "Chart.js"],
     "url": "https://admin.zacharystocks.com",
     "github": "https://github.com/zstocks/dashboard",
@@ -20,7 +20,7 @@
   {
     "id": "basecamp",
     "name": "Basecamp",
-    "blurb": "Habit, workout, meal, and body-metric tracker.",
+    "blurb": "My own personalized habit, workout, and food tracker.",
     "tags": ["Node", "SQLite"],
     "url": "https://basecamp.zacharystocks.com",
     "github": null,
@@ -29,8 +29,8 @@
   {
     "id": "ollama-chat",
     "name": "Ollama Chat",
-    "blurb": "Self-hosted LLM chat with a homelab image-gen pipeline.",
-    "tags": ["Node", "Express", "Ollama"],
+    "blurb": "Self-hosted, 100% private LLM chat. Local models on my home machine, chat UI on my VPS. Tailscale for the bridge.",
+    "tags": ["Node", "Express", "Ollama", "ComfyUI", "Tailscale"],
     "url": "https://chat.zacharystocks.com",
     "github": null,
     "access": "private"
