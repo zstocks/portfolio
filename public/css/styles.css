@@ -93,7 +93,8 @@ a:hover {
     font-size: 1.2rem;
     color: var(--text-primary);
     letter-spacing: -0.02em;
-    margin: 0 2rem 0 0;
+    margin: 0;
+    margin-right: auto;
 }
 
 .nav-logo:hover {
@@ -153,7 +154,6 @@ a:hover {
     font-size: 1.15rem;
     color: var(--text-secondary);
     font-weight: 300;
-    max-width: 640px;
 }
 
 /* --- Board status line --- */
@@ -172,7 +172,7 @@ a:hover {
 /* --- Project Grid --- */
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
     padding-bottom: 4rem;
 }
@@ -330,7 +330,6 @@ a:hover {
 .about {
     padding: 3rem 0;
     border-top: 1px solid var(--border);
-    max-width: 720px;
 }
 
 .about h2 {
