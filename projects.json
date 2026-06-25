@@ -1,5 +1,14 @@
 [
   {
+    "id": "portfolio",
+    "name": "My Portfolio",
+    "blurb": "Um.. this is it. It's this website. I built it to show off the other things I build.",
+    "tags": ["Vanilla JS", "Zero Dependencies", "Real-time Status"],
+    "url": "https://zacharystocks.com",
+    "github": "https://github.com/zstocks/portfolio",
+    "access": "public"
+  },
+  {
     "id": "pinochle",
     "name": "Pinochle",
     "blurb": "Real-time multiplayer for my family's house rules.",
@@ -23,7 +32,7 @@
     "blurb": "My own personalized habit, workout, and food tracker.",
     "tags": ["Node", "SQLite"],
     "url": "https://basecamp.zacharystocks.com",
-    "github": null,
+    "github": "https://github.com/zstocks/basecamp",
     "access": "private"
   },
   {
