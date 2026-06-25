@@ -11,7 +11,7 @@
   {
     "id": "dashboard",
     "name": "Server Health Dashboard",
-    "blurb": "Live metrics for my VPS so I can monitorCPU, memory, containers, Nginx in real time.",
+    "blurb": "Live metrics for my VPS so I can monitor CPU, memory, containers, Nginx in real time.",
     "tags": ["Node", "WebSockets", "Chart.js"],
     "url": "https://admin.zacharystocks.com",
     "github": "https://github.com/zstocks/dashboard",
